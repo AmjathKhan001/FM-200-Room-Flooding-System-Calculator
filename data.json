@@ -1,6 +1,6 @@
 {
   "exchangeRates": {
-    "USD": 1,
+    "USD": 1.0,
     "EUR": 0.92,
     "INR": 83.5,
     "AED": 3.67
@@ -36,8 +36,8 @@
       "criticalArea": 1.2
     },
     "nfpaRequirements": {
-        "minConcentration": 7.0,
-        "minAgentMargin": 0.07
+      "minConcentration": 7.0,
+      "minAgentMargin": 0.07
     }
   },
   "oemSuppliers": [
