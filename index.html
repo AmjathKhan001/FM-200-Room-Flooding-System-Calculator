@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Professional FM-200 Fire Suppression System Calculator">
+    <meta name="description" content="Professional FM-200 Fire Suppression System Calculator - Budgetary Estimation Tool">
     <title>FM-200 System Calculator | Fire Safety Tools</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 <body>
     <div id="appNotification" class="notification"></div>
@@ -17,47 +18,48 @@
                 <div class="logo">
                     <i class="fas fa-fire-extinguisher"></i>
                     <h1>FM-200 Calculator</h1>
+                    <span class="tagline">Professional Budgetary Estimation Tool</span>
                 </div>
-                <nav class="main-nav">
-                    <a href="index.html" class="active"><i class="fas fa-calculator"></i> Calculator</a>
-                    <a href="results.html"><i class="fas fa-chart-bar"></i> Results</a>
-                    <a href="quotation.html"><i class="fas fa-file-invoice-dollar"></i> Quotation</a>
+                <div class="header-actions">
+                    <div id="google_translate_element" class="translate-widget"></div>
                     <button id="themeToggle" class="btn-icon"><i class="fas fa-moon"></i></button>
-                </nav>
+                </div>
             </div>
+            <nav class="main-nav">
+                <a href="index.html" class="active"><i class="fas fa-calculator"></i> Calculator</a>
+                <a href="results.html"><i class="fas fa-chart-bar"></i> Results</a>
+                <a href="quotation.html"><i class="fas fa-file-invoice-dollar"></i> Quotation</a>
+            </nav>
         </div>
     </header>
 
     <main class="main-content">
         <div class="container">
-            <div class="page-header">
-                <h1>FM-200 Budgetary Estimation Tool</h1>
-                <button id="expertMode" class="btn-icon btn-outline"><i class="fas fa-user-cog"></i> Expert Mode</button>
+            <div class="hero-section">
+                <h1>FM-200 Clean Agent System Calculator</h1>
+                <p class="subtitle">NFPA 2001 Compliant • Budgetary Estimation • Multi-Currency Support</p>
             </div>
 
             <div class="calculator-grid">
                 <div class="card form-card">
                     <div class="card-header">
-                        <h2><i class="fas fa-ruler-combined"></i> Project & Room Data</h2>
-                        <div>
-                            <button id="saveTemplate" class="btn-icon btn-secondary"><i class="fas fa-save"></i> Save</button>
-                            <button id="resetBtn" class="btn-icon btn-danger"><i class="fas fa-sync-alt"></i> Reset</button>
-                        </div>
+                        <h2><i class="fas fa-ruler-combined"></i> Project & Room Specifications</h2>
+                        <button id="expertMode" class="btn-icon btn-outline"><i class="fas fa-user-cog"></i> Expert Mode</button>
                     </div>
                     
                     <form id="budgetForm">
-                        <fieldset class="input-section">
-                            <legend>Project Details</legend>
+                        <div class="form-section">
+                            <h3><i class="fas fa-project-diagram"></i> Project Details</h3>
                             <div class="input-group">
-                                <label for="projectName">Project Name</label>
-                                <input type="text" id="projectName" value="Data Center Project A" required>
+                                <label for="projectName"><i class="fas fa-tag"></i> Project Name</label>
+                                <input type="text" id="projectName" placeholder="e.g., Data Center Fire Protection" value="Data Center Project A" required>
                             </div>
                             <div class="input-group">
-                                <label for="clientLocation">Client/Location</label>
-                                <input type="text" id="clientLocation" value="Dubai, UAE" required>
+                                <label for="clientLocation"><i class="fas fa-map-marker-alt"></i> Client Location</label>
+                                <input type="text" id="clientLocation" placeholder="e.g., Dubai, UAE" value="Dubai, UAE" required>
                             </div>
                             <div class="input-group">
-                                <label for="currency">Output Currency</label>
+                                <label for="currency"><i class="fas fa-money-bill-wave"></i> Output Currency</label>
                                 <select id="currency" required>
                                     <option value="USD">USD - US Dollar</option>
                                     <option value="EUR">EUR - Euro</option>
@@ -65,73 +67,126 @@
                                     <option value="AED" selected>AED - UAE Dirham</option>
                                 </select>
                             </div>
-                        </fieldset>
+                        </div>
 
-                        <fieldset class="input-section">
-                            <legend>Room Dimensions (Meters)</legend>
+                        <div class="form-section">
+                            <h3><i class="fas fa-cube"></i> Room Dimensions (Meters)</h3>
                             <div class="input-grid">
                                 <div class="input-group">
-                                    <label for="roomLength">Length (m)</label>
+                                    <label for="roomLength"><i class="fas fa-arrows-alt-h"></i> Length (m)</label>
                                     <input type="number" id="roomLength" value="10" min="1" step="0.1" required>
                                 </div>
                                 <div class="input-group">
-                                    <label for="roomWidth">Width (m)</label>
+                                    <label for="roomWidth"><i class="fas fa-arrows-alt-v"></i> Width (m)</label>
                                     <input type="number" id="roomWidth" value="8" min="1" step="0.1" required>
                                 </div>
                                 <div class="input-group">
-                                    <label for="roomHeight">Height (m)</label>
-                                    <input type="number" id="roomHeight" value="4" min="1" step="0.1" required>
+                                    <label for="roomHeight"><i class="fas fa-arrows-alt-v"></i> Height (m)</label>
+                                    <input type="number" id="roomHeight" value="4" min="2" step="0.1" required>
                                 </div>
                             </div>
-                        </fieldset>
+                        </div>
 
-                        <fieldset class="input-section expert-only">
-                            <legend>Advanced Parameters (Expert Mode)</legend>
+                        <div class="form-section expert-only">
+                            <h3><i class="fas fa-cogs"></i> Advanced Parameters</h3>
                             <div class="input-group">
-                                <label for="equipmentVolume">Equipment Volume (m³)</label>
+                                <label for="equipmentVolume"><i class="fas fa-server"></i> Equipment Volume (m³)</label>
                                 <input type="number" id="equipmentVolume" value="5" min="0" step="0.1">
+                                <small>Volume of permanent equipment to deduct</small>
                             </div>
                             <div class="input-group">
-                                <label for="minTemperature">Min. Temperature (°C)</label>
-                                <input type="number" id="minTemperature" value="20" min="-20" step="1" required>
+                                <label for="minTemperature"><i class="fas fa-thermometer-half"></i> Minimum Temperature (°C)</label>
+                                <input type="number" id="minTemperature" value="20" min="-20" max="60" step="1" required>
                             </div>
                             <div class="input-group">
-                                <label for="altitude">Altitude (m)</label>
+                                <label for="altitude"><i class="fas fa-mountain"></i> Altitude (m)</label>
                                 <input type="number" id="altitude" value="0" min="0" step="10">
+                                <small>Above sea level (affects agent density)</small>
                             </div>
                             <div class="input-group">
-                                <label for="safetyFactor">Safety Factor (%)</label>
-                                <input type="number" id="safetyFactor" value="107" min="100" max="150" step="1" required>
-                            </div>
-                            <div class="input-group">
-                                <label for="cylinderSize">Cylinder Size (kg)</label>
-                                <select id="cylinderSize" required>
-                                    <option value="54.4">54.4 kg (120 lb)</option>
-                                    <option value="27.2">27.2 kg (60 lb)</option>
-                                    <option value="108.8">108.8 kg (240 lb)</option>
+                                <label for="safetyFactor"><i class="fas fa-shield-alt"></i> Safety Factor (%)</label>
+                                <select id="safetyFactor" required>
+                                    <option value="107">107% (Standard)</option>
+                                    <option value="110">110% (High Safety)</option>
+                                    <option value="115">115% (Critical Area)</option>
                                 </select>
                             </div>
-                        </fieldset>
-                        
-                        <button type="submit" class="btn-primary btn-lg"><i class="fas fa-chart-line"></i> Calculate FM-200 Requirements</button>
+                            <div class="input-group">
+                                <label for="cylinderSize"><i class="fas fa-database"></i> Cylinder Size (kg)</label>
+                                <select id="cylinderSize" required>
+                                    <option value="54.4">54.4 kg (120 lb) - Standard</option>
+                                    <option value="27.2">27.2 kg (60 lb) - Compact</option>
+                                    <option value="108.8">108.8 kg (240 lb) - Large</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" id="resetBtn" class="btn-secondary">
+                                <i class="fas fa-redo"></i> Reset All
+                            </button>
+                            <button type="submit" id="calculateBtn" class="btn-primary btn-lg">
+                                <i class="fas fa-calculator"></i> Calculate & Proceed to Results
+                            </button>
+                        </div>
                     </form>
                 </div>
 
                 <div class="card preview-card">
                     <div class="card-header">
                         <h2><i class="fas fa-tachometer-alt"></i> Quick Preview</h2>
+                        <span class="badge">Live Update</span>
                     </div>
                     <div id="quickPreviewMetrics" class="preview-content">
                         <div class="preview-placeholder">
-                            <i class="fas fa-ruler-combined"></i> Enter dimensions to see preview
+                            <i class="fas fa-calculator"></i>
+                            <h3>Ready to Calculate</h3>
+                            <p>Enter room dimensions to see instant preview</p>
                         </div>
                     </div>
                     
                     <div class="card-footer">
-                        <div class="disclaimer-note">
-                            <i class="fas fa-info-circle"></i> Preview shows rough estimates. Use 'Calculate' for NFPA-compliant results.
+                        <div class="info-box">
+                            <i class="fas fa-lightbulb"></i>
+                            <div>
+                                <h4>Quick Tip</h4>
+                                <p>FM-200 requires 7% concentration for Class A fires as per NFPA 2001</p>
+                            </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="features-section">
+                <h2><i class="fas fa-star"></i> Key Features</h2>
+                <div class="features-grid">
+                    <div class="feature">
+                        <i class="fas fa-balance-scale"></i>
+                        <h3>NFPA 2001 Compliant</h3>
+                        <p>Uses standard formula with altitude and temperature corrections</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-globe"></i>
+                        <h3>Multi-Currency</h3>
+                        <p>USD, EUR, INR, AED with real-time conversion</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        <h3>BOQ Generation</h3>
+                        <p>Detailed Bill of Quantities with pricing</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-chart-pie"></i>
+                        <h3>Cost Breakdown</h3>
+                        <p>Visual cost analysis and budgeting</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="oem-section">
+                <h2><i class="fas fa-industry"></i> Recommended OEM Suppliers</h2>
+                <div class="suppliers-grid" id="oemSuppliers">
+                    <!-- Loaded by JavaScript -->
                 </div>
             </div>
         </div>
@@ -140,10 +195,13 @@
     <footer class="main-footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section footer-logo">
-                    <i class="fas fa-fire-extinguisher"></i>
-                    <h4>FM-200 Calculator</h4>
-                    <p>Budgetary Tool v2.1</p>
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-fire-extinguisher"></i>
+                        <h3>FM-200 Calculator</h3>
+                    </div>
+                    <p class="footer-tagline">Professional Fire Suppression Budgeting Tool</p>
+                    <p class="version">Version 3.0 • NFPA 2001 Compliant</p>
                 </div>
                 
                 <div class="footer-section">
@@ -158,26 +216,55 @@
                 <div class="footer-section">
                     <h4>Resources</h4>
                     <ul>
-                        <li><a href="https://www.nfpa.org/2001" target="_blank"><i class="fas fa-book"></i> NFPA 2001</a></li>
-                        <li><a href="https://www.kiddefenwal.com" target="_blank"><i class="fas fa-external-link-alt"></i> OEM Suppliers</a></li>
+                        <li><a href="https://www.nfpa.org/2001" target="_blank" rel="noopener"><i class="fas fa-book"></i> NFPA 2001 Standard</a></li>
+                        <li><a href="#" id="oemGuide"><i class="fas fa-external-link-alt"></i> OEM Selection Guide</a></li>
+                        <li><a href="#" id="printGuide"><i class="fas fa-print"></i> Print Guide</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
-                    <h4>Disclaimer</h4>
-                    <p class="footer-note">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        For budgetary estimation only. Final design requires qualified engineers.
-                    </p>
+                    <h4>Support This Project</h4>
+                    <div class="support-links">
+                        <a href="https://www.buymeacoffee.com/firesafety" target="_blank" rel="noopener" class="coffee-link">
+                            <i class="fas fa-coffee"></i> Buy Me a Coffee
+                        </a>
+                        <a href="#" class="affiliate-link" id="affiliateLink">
+                            <i class="fas fa-shopping-cart"></i> Recommended Suppliers
+                        </a>
+                        <div class="contact-info">
+                            <i class="fas fa-envelope"></i> support@firesafetytools.com
+                        </div>
+                    </div>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2024 Fire Safety Tools. | <a href="#" onclick="return false">Privacy</a> | <a href="#" onclick="return false">Terms</a></p>
+                <p>&copy; 2024 Fire Safety Tools. This tool provides budgetary estimates only. Final design must be performed by qualified fire protection engineers.</p>
+                <div class="footer-disclaimer">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Disclaimer: This calculator is for preliminary estimation only. All calculations should be verified by certified professionals.</span>
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- JavaScript Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    
+    <!-- Main Application Script -->
     <script src="script.js"></script>
+    
+    <!-- Google Translate Initialization -->
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,es,fr,de,ar,hi,zh-CN',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
 </body>
 </html>
