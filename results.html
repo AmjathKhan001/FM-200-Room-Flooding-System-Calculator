@@ -6,6 +6,7 @@
     <title>FM-200 Calculation Results | Fire Safety Tools</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 <body>
     <div id="appNotification" class="notification"></div>
@@ -16,137 +17,273 @@
                 <div class="logo">
                     <i class="fas fa-fire-extinguisher"></i>
                     <h1>FM-200 Calculator</h1>
+                    <span class="tagline">Calculation Results & BOQ</span>
                 </div>
-                <nav class="main-nav">
-                    <a href="index.html"><i class="fas fa-calculator"></i> Calculator</a>
-                    <a href="results.html" class="active"><i class="fas fa-chart-bar"></i> Results</a>
-                    <a href="quotation.html"><i class="fas fa-file-invoice-dollar"></i> Quotation</a>
+                <div class="header-actions">
+                    <div id="google_translate_element" class="translate-widget"></div>
                     <button id="themeToggle" class="btn-icon"><i class="fas fa-moon"></i></button>
-                </nav>
+                </div>
             </div>
+            <nav class="main-nav">
+                <a href="index.html"><i class="fas fa-calculator"></i> Calculator</a>
+                <a href="results.html" class="active"><i class="fas fa-chart-bar"></i> Results</a>
+                <a href="quotation.html"><i class="fas fa-file-invoice-dollar"></i> Quotation</a>
+            </nav>
         </div>
     </header>
 
     <main class="main-content">
         <div class="container">
             <div class="page-header">
-                <h1>Calculation Results for <span id="displayProjectName">FM-200 Project</span></h1>
-                <div>
-                    <button id="printResults" class="btn-secondary"><i class="fas fa-print"></i> Print</button>
-                    <a href="quotation.html" class="btn-primary"><i class="fas fa-file-invoice-dollar"></i> Generate Quotation</a>
+                <div class="project-info">
+                    <h1 id="displayProjectName">FM-200 System Calculation Results</h1>
+                    <div class="project-meta">
+                        <span class="location"><i class="fas fa-map-marker-alt"></i> <span id="displayLocation">Location</span></span>
+                        <span class="date"><i class="fas fa-calendar"></i> <span id="calculationDate">Today</span></span>
+                        <span class="currency"><i class="fas fa-money-bill-wave"></i> <span id="displayCurrency">USD</span></span>
+                    </div>
+                </div>
+                <div class="page-actions">
+                    <a href="index.html" class="btn-outline">
+                        <i class="fas fa-arrow-left"></i> Back to Inputs
+                    </a>
+                    <a href="quotation.html" class="btn-primary">
+                        <i class="fas fa-file-invoice-dollar"></i> Prepare Quotation
+                    </a>
                 </div>
             </div>
-            
-            <section id="calculationResults">
-                <p class="project-meta">Location: <span id="displayLocation">Loading...</span> | <span id="calculationTimestamp">Calculated just now</span></p>
 
-                <div class="card metrics-card">
-                    <div class="card-header">
-                        <h2><i class="fas fa-balance-scale"></i> Key System Requirements</h2>
-                    </div>
-                    <div class="specs-grid metrics-grid">
-                        <div class="metric-box">
-                            <span class="metric-label">Agent Required</span>
-                            <span class="metric-value" id="agentQuantity">0 kg</span>
-                        </div>
-                        <div class="metric-box">
-                            <span class="metric-label">Cylinders (Min.)</span>
-                            <span class="metric-value" id="cylinderCount">0 pcs</span>
-                        </div>
-                        <div class="metric-box">
-                            <span class="metric-label">Cylinder Size</span>
-                            <span class="metric-value" id="cylinderSizeDisplay">0 kg</span>
-                        </div>
-                        <div class="metric-box">
-                            <span class="metric-label">Discharge Nozzles</span>
-                            <span class="metric-value" id="nozzleCount">0 pcs</span>
-                        </div>
-                        <div class="metric-box">
-                            <span class="metric-label">Estimated Pipe Length</span>
-                            <span class="metric-value" id="pipingLength">0 m</span>
-                        </div>
-                        <div class="metric-box">
-                            <span class="metric-label">Floor Area</span>
-                            <span class="metric-value" id="floorArea">0 m²</span>
-                        </div>
-                    </div>
-                </div>
-
+            <div class="results-section">
                 <div class="results-grid">
-                    <div class="card chart-card">
+                    <!-- System Requirements -->
+                    <div class="card requirements-card">
                         <div class="card-header">
-                            <h2><i class="fas fa-chart-pie"></i> Cost Breakdown</h2>
+                            <h2><i class="fas fa-cogs"></i> System Requirements</h2>
+                            <span class="badge badge-primary">Calculated</span>
                         </div>
-                        <div class="chart-container">
-                            <canvas id="costBreakdownChart"></canvas>
-                            <div class="chart-note" id="chartNote">
-                                Chart will display after calculation
+                        <div class="requirements-grid">
+                            <div class="requirement-item">
+                                <div class="requirement-icon">
+                                    <i class="fas fa-weight"></i>
+                                </div>
+                                <div class="requirement-details">
+                                    <span class="requirement-label">FM-200 Agent Required</span>
+                                    <span class="requirement-value" id="agentQuantity">0.00 kg</span>
+                                </div>
+                            </div>
+                            <div class="requirement-item">
+                                <div class="requirement-icon">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                                <div class="requirement-details">
+                                    <span class="requirement-label">Cylinders Required</span>
+                                    <span class="requirement-value" id="cylinderCount">0 pcs</span>
+                                    <span class="requirement-sub">Size: <span id="cylinderSizeDisplay">54.4 kg</span></span>
+                                </div>
+                            </div>
+                            <div class="requirement-item">
+                                <div class="requirement-icon">
+                                    <i class="fas fa-spray-can"></i>
+                                </div>
+                                <div class="requirement-details">
+                                    <span class="requirement-label">Discharge Nozzles</span>
+                                    <span class="requirement-value" id="nozzleCount">0 pcs</span>
+                                </div>
+                            </div>
+                            <div class="requirement-item">
+                                <div class="requirement-icon">
+                                    <i class="fas fa-pipe"></i>
+                                </div>
+                                <div class="requirement-details">
+                                    <span class="requirement-label">Estimated Piping</span>
+                                    <span class="requirement-value" id="pipingLength">0.00 m</span>
+                                </div>
+                            </div>
+                            <div class="requirement-item">
+                                <div class="requirement-icon">
+                                    <i class="fas fa-cube"></i>
+                                </div>
+                                <div class="requirement-details">
+                                    <span class="requirement-label">Net Volume Protected</span>
+                                    <span class="requirement-value" id="netVolume">0.00 m³</span>
+                                </div>
+                            </div>
+                            <div class="requirement-item">
+                                <div class="requirement-icon">
+                                    <i class="fas fa-expand-arrows-alt"></i>
+                                </div>
+                                <div class="requirement-details">
+                                    <span class="requirement-label">Floor Area</span>
+                                    <span class="requirement-value" id="floorArea">0.00 m²</span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="card boq-card">
+                    <!-- Budgetary Cost -->
+                    <div class="card cost-card">
                         <div class="card-header">
-                            <h2><i class="fas fa-list-ol"></i> Bill of Quantities (BOQ)</h2>
+                            <h2><i class="fas fa-chart-line"></i> Budgetary Cost Estimate</h2>
+                            <div class="currency-selector">
+                                <select id="resultsCurrency" class="currency-select">
+                                    <option value="USD">USD</option>
+                                    <option value="EUR">EUR</option>
+                                    <option value="INR">INR</option>
+                                    <option value="AED">AED</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="table-responsive">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Item</th>
-                                        <th>Description</th>
-                                        <th>Qty</th>
-                                        <th>Unit</th>
-                                        <th class="text-right">Unit Price</th>
-                                        <th class="text-right">Total Cost</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="boqBody">
-                                    <tr id="boqEmpty">
-                                        <td colspan="6" class="text-center">No calculation data available. Please use the calculator first.</td>
-                                    </tr>
-                                </tbody>
-                                <tfoot id="boqFooter"></tfoot>
-                            </table>
+                        <div class="cost-summary">
+                            <div class="total-cost">
+                                <span class="total-label">Estimated System Cost</span>
+                                <span class="total-value" id="totalCost">$0.00</span>
+                            </div>
+                            <div class="cost-breakdown">
+                                <div class="cost-item">
+                                    <span class="cost-label">Equipment</span>
+                                    <span class="cost-amount" id="equipmentCost">$0.00</span>
+                                </div>
+                                <div class="cost-item">
+                                    <span class="cost-label">Installation</span>
+                                    <span class="cost-amount" id="installationCost">$0.00</span>
+                                </div>
+                                <div class="cost-item">
+                                    <span class="cost-label">Engineering</span>
+                                    <span class="cost-amount" id="engineeringCost">$0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="exchange-rate">
+                            <i class="fas fa-exchange-alt"></i>
+                            Exchange Rate: 1 USD = <span id="exchangeRate">1.00</span> <span id="selectedCurrency">USD</span>
                         </div>
                     </div>
                 </div>
-                
-                <div class="action-buttons">
-                    <a href="index.html" class="btn-outline"><i class="fas fa-redo"></i> New Calculation</a>
-                    <button id="exportData" class="btn-secondary"><i class="fas fa-download"></i> Export Data</button>
+
+                <!-- Bill of Quantities -->
+                <div class="card boq-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-list-ol"></i> Bill of Quantities (BOQ)</h2>
+                        <button id="exportBOQ" class="btn-secondary btn-sm">
+                            <i class="fas fa-download"></i> Export CSV
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table" id="boqTable">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Description</th>
+                                    <th>Quantity</th>
+                                    <th>Unit</th>
+                                    <th class="text-right">Unit Price (USD)</th>
+                                    <th class="text-right">Total (USD)</th>
+                                    <th class="text-right">Total (<span id="boqCurrency">USD</span>)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="boqBody">
+                                <!-- Filled by JavaScript -->
+                            </tbody>
+                            <tfoot id="boqFooter">
+                                <!-- Filled by JavaScript -->
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
-                
-                <div class="disclaimer-box">
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <a href="index.html" class="btn-secondary">
+                        <i class="fas fa-redo"></i> New Calculation
+                    </a>
+                    <a href="quotation.html" class="btn-primary">
+                        <i class="fas fa-file-pdf"></i> Generate Quotation
+                    </a>
+                    <button id="printResults" class="btn-outline">
+                        <i class="fas fa-print"></i> Print Report
+                    </button>
+                </div>
+
+                <!-- OEM & Maps Section -->
+                <div class="oem-maps-section">
+                    <div class="card oem-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-industry"></i> OEM Suppliers</h2>
+                        </div>
+                        <div class="suppliers-list" id="resultsOemSuppliers">
+                            <!-- Loaded by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="card maps-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-map-marked-alt"></i> Local Suppliers Search</h2>
+                        </div>
+                        <div class="maps-content">
+                            <div id="googleMapsSearch">
+                                <div class="maps-placeholder">
+                                    <i class="fas fa-search-location"></i>
+                                    <h3>Find Local Suppliers</h3>
+                                    <p>Search for FM-200 system suppliers in your area</p>
+                                    <button id="searchSuppliers" class="btn-secondary">
+                                        <i class="fas fa-search"></i> Search Google Maps
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NFPA Disclaimer -->
+                <div class="disclaimer-card">
                     <div class="disclaimer-header">
                         <i class="fas fa-exclamation-triangle"></i>
-                        <h3>Important NFPA 2001 Disclaimer</h3>
+                        <h2>Important NFPA 2001 Disclaimer & Notes</h2>
                     </div>
                     <div class="disclaimer-body">
-                        <p>This calculation provides <strong>budgetary estimates only</strong>. Final system design must:</p>
+                        <p><strong>This calculation provides BUDGETARY ESTIMATES only.</strong> Final system design must:</p>
                         <ul>
-                            <li>Be performed by a qualified fire protection engineer</li>
-                            <li>Comply with all applicable NFPA 2001 standards and local regulations</li>
-                            <li>Include site-specific factors not considered in this calculator</li>
-                            <li>Account for actual room leakage rates and ventilation</li>
+                            <li>Be performed by a qualified fire protection engineer licensed in your jurisdiction</li>
+                            <li>Comply with all applicable NFPA 2001 standards and local regulations/codes</li>
+                            <li>Include site-specific factors not considered in this calculator (leakage, ventilation, occupancy, etc.)</li>
+                            <li>Account for actual room leakage rates and ventilation system effects</li>
+                            <li>Include proper hazard analysis and risk assessment specific to the protected area</li>
+                            <li>Consider all safety factors, including those for altitude, temperature, and critical areas</li>
                         </ul>
-                        <p class="disclaimer-note">
-                            <i class="fas fa-info-circle"></i>
-                            Always consult with certified professionals before implementation.
-                        </p>
+                        <div class="disclaimer-notes">
+                            <div class="note">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Minimum concentration for Class A fires: 7.0% (NFPA 2001 Section 5.3.2)</span>
+                            </div>
+                            <div class="note">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Specific vapor volume (S) calculated at minimum expected temperature</span>
+                            </div>
+                            <div class="note">
+                                <i class="fas fa-info-circle"></i>
+                                <span>All costs are estimates - actual prices may vary based on supplier, location, and project specifics</span>
+                            </div>
+                        </div>
+                        <div class="final-note">
+                            <i class="fas fa-handshake"></i>
+                            <span><strong>Always consult with certified fire protection professionals before implementing any fire suppression system.</strong></span>
+                        </div>
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
     </main>
 
     <footer class="main-footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section footer-logo">
-                    <i class="fas fa-fire-extinguisher"></i>
-                    <h4>FM-200 Calculator</h4>
-                    <p>Budgetary Tool v2.1</p>
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-fire-extinguisher"></i>
+                        <h3>FM-200 Calculator</h3>
+                    </div>
+                    <p class="footer-tagline">Professional Fire Suppression Budgeting Tool</p>
+                    <p class="version">Version 3.0 • NFPA 2001 Compliant</p>
                 </div>
                 
                 <div class="footer-section">
@@ -161,27 +298,55 @@
                 <div class="footer-section">
                     <h4>Resources</h4>
                     <ul>
-                        <li><a href="https://www.nfpa.org/2001" target="_blank"><i class="fas fa-book"></i> NFPA 2001</a></li>
-                        <li><a href="https://www.kiddefenwal.com" target="_blank"><i class="fas fa-external-link-alt"></i> OEM Suppliers</a></li>
+                        <li><a href="https://www.nfpa.org/2001" target="_blank" rel="noopener"><i class="fas fa-book"></i> NFPA 2001 Standard</a></li>
+                        <li><a href="#" id="oemGuide"><i class="fas fa-external-link-alt"></i> OEM Selection Guide</a></li>
+                        <li><a href="#" id="printGuide"><i class="fas fa-print"></i> Print Guide</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
-                    <h4>Disclaimer</h4>
-                    <p class="footer-note">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        For budgetary estimation only. Final design requires qualified engineers.
-                    </p>
+                    <h4>Support This Project</h4>
+                    <div class="support-links">
+                        <a href="https://www.buymeacoffee.com/firesafety" target="_blank" rel="noopener" class="coffee-link">
+                            <i class="fas fa-coffee"></i> Buy Me a Coffee
+                        </a>
+                        <a href="#" class="affiliate-link" id="affiliateLink">
+                            <i class="fas fa-shopping-cart"></i> Recommended Suppliers
+                        </a>
+                        <div class="contact-info">
+                            <i class="fas fa-envelope"></i> support@firesafetytools.com
+                        </div>
+                    </div>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2024 Fire Safety Tools. | <a href="#" onclick="return false">Privacy</a> | <a href="#" onclick="return false">Terms</a></p>
+                <p>&copy; 2024 Fire Safety Tools. This tool provides budgetary estimates only. Final design must be performed by qualified fire protection engineers.</p>
+                <div class="footer-disclaimer">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Disclaimer: This calculator is for preliminary estimation only. All calculations should be verified by certified professionals.</span>
+                </div>
             </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- JavaScript Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    
+    <!-- Main Application Script -->
     <script src="script.js"></script>
+    
+    <!-- Google Translate Initialization -->
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,es,fr,de,ar,hi,zh-CN',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
 </body>
 </html>
