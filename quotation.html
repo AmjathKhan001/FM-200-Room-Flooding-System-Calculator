@@ -6,9 +6,6 @@
     <title>Generate Quotation | FM-200 Calculator</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- PDF Generation Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
 </head>
 <body>
     <div id="appNotification" class="notification"></div>
@@ -55,15 +52,15 @@
                         <div class="detail-section">
                             <h3>Sender Information</h3>
                             <div class="quote-info">
-                                <p><span class="quote-label">Name:</span> <input type="text" id="senderName" placeholder="Your Company Name" style="width: 70%;"></p>
-                                <p><span class="quote-label">Email:</span> <input type="email" id="senderEmail" placeholder="contact@company.com" style="width: 70%;"></p>
+                                <p><span class="quote-label">Company:</span> <input type="text" id="senderName" placeholder="Your Company Name" value="Fire Safety Tools Ltd."></p>
+                                <p><span class="quote-label">Email:</span> <input type="email" id="senderEmail" placeholder="contact@company.com" value="sales@firesafetytools.com"></p>
                             </div>
                         </div>
                         
                         <div class="detail-section">
                             <h3>Client Information</h3>
                             <div class="quote-info">
-                                <p><span class="quote-label">Client Name:</span> <input type="text" id="clientName" placeholder="Client Company Name" style="width: 70%;"></p>
+                                <p><span class="quote-label">Client:</span> <input type="text" id="clientName" placeholder="Client Company Name" value="ABC Data Center"></p>
                                 <p><span class="quote-label">Project:</span> <span id="quoteProjectName">FM-200 Project</span></p>
                                 <p><span class="quote-label">Location:</span> <span id="quoteClientLocation">Dubai, UAE</span></p>
                             </div>
@@ -72,9 +69,9 @@
                         <div class="detail-section">
                             <h3>Quotation Details</h3>
                             <div class="quote-info">
-                                <p><span class="quote-label">Ref No:</span> <input type="text" id="quotationRef" value="QUOT-FM200-001" style="width: 60%;"></p>
-                                <p><span class="quote-label">Date:</span> <input type="date" id="quotationDate" style="width: 60%;"></p>
-                                <p><span class="quote-label">Valid Until:</span> <input type="date" id="validUntil" style="width: 60%;"></p>
+                                <p><span class="quote-label">Ref No:</span> <input type="text" id="quotationRef" value="QUOT-FM200-001"></p>
+                                <p><span class="quote-label">Date:</span> <input type="date" id="quotationDate"></p>
+                                <p><span class="quote-label">Valid Until:</span> <input type="date" id="validUntil"></p>
                             </div>
                         </div>
                     </div>
@@ -97,7 +94,9 @@
                                 </tr>
                             </thead>
                             <tbody id="quotationTableBody">
-                                <!-- Filled by JavaScript -->
+                                <tr id="quoteEmpty">
+                                    <td colspan="6" class="text-center">No calculation data available. Please use the calculator first, then generate results.</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -119,7 +118,6 @@
                             <li>Final design must be performed by qualified fire protection engineers</li>
                             <li>System must comply with NFPA 2001 and local regulations</li>
                             <li>Installation requires certified technicians</li>
-                            <li>Warranty as per OEM specifications</li>
                             <li>This quotation is valid for 30 days from the date issued</li>
                         </ul>
                         <p class="disclaimer-note">
@@ -138,7 +136,7 @@
                 <div class="footer-section footer-logo">
                     <i class="fas fa-fire-extinguisher"></i>
                     <h4>FM-200 Calculator</h4>
-                    <p>Budgetary Tool v2.0.2</p>
+                    <p>Budgetary Tool v2.1</p>
                 </div>
                 
                 <div class="footer-section">
@@ -153,30 +151,28 @@
                 <div class="footer-section">
                     <h4>Resources</h4>
                     <ul>
-                        <li><a href="https://www.nfpa.org/codes-and-standards/all-codes-and-standards/list-of-codes-and-standards/detail?codeid=2001" target="_blank"><i class="fas fa-book"></i> NFPA 2001 Standard</a></li>
-                        <li><a href="https://firesafetytools.com/oem-suppliers" target="_blank"><i class="fas fa-external-link-alt"></i> OEM Suppliers</a></li>
-                        <li><a href="#" id="printGuide"><i class="fas fa-print"></i> Print Guide</a></li>
-                        <li><a href="#" id="exportData"><i class="fas fa-download"></i> Export Data</a></li>
+                        <li><a href="https://www.nfpa.org/2001" target="_blank"><i class="fas fa-book"></i> NFPA 2001</a></li>
+                        <li><a href="https://www.kiddefenwal.com" target="_blank"><i class="fas fa-external-link-alt"></i> OEM Suppliers</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
-                    <h4>Contact</h4>
-                    <p><i class="fas fa-envelope"></i> support@firesafetytools.com</p>
-                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <h4>Disclaimer</h4>
+                    <p class="footer-note">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        For budgetary estimation only. Final design requires qualified engineers.
+                    </p>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2024 Fire Safety Tools. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
-                <p class="footer-note">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    This tool provides budgetary estimates only. Final design must be performed by qualified engineers.
-                </p>
+                <p>&copy; 2024 Fire Safety Tools. | <a href="#" onclick="return false">Privacy</a> | <a href="#" onclick="return false">Terms</a></p>
             </div>
         </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
