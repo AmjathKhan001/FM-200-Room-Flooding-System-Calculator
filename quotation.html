@@ -4,15 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generate FM-200 Quotation | Fire Safety Tools</title>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=pub-6687860250561653"
+        crossorigin="anonymous" data-ad-client="pub-6687860250561653"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-376208036"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-376208036');
+    </script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     
-    <!-- PDF Generation Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
-    <!-- Excel/CSV Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 <body>
@@ -34,280 +42,223 @@
             <nav class="main-nav">
                 <a href="index.html"><i class="fas fa-calculator"></i> Calculator</a>
                 <a href="results.html"><i class="fas fa-chart-bar"></i> Results</a>
-                <a href="quotation.html" class="active"><i class="fas fa-file-invoice-dollar"></i> Quotation</a>
+                <a href="quotation.html" class="active"><i class="fas fa-file-invoice"></i> Quotation</a>
             </nav>
         </div>
     </header>
 
-    <main class="main-content">
-        <div class="container">
-            <div class="quotation-header">
-                <h1><i class="fas fa-file-contract"></i> FM-200 System Quotation</h1>
-                <p class="subtitle">Generate Professional Quotation Document</p>
-            </div>
-
-            <div id="quotationBody">
-                <!-- Quotation Details Form -->
-                <div class="card form-card">
-                    <div class="card-header">
-                        <h2><i class="fas fa-edit"></i> Quotation Details</h2>
-                        <button type="button" id="autoFill" class="btn-secondary btn-sm">
-                            <i class="fas fa-magic"></i> Auto-Fill from Calculation
-                        </button>
-                    </div>
-                    
-                    <form id="quotationForm">
+    <main class="container">
+        <div class="quotation-wrapper">
+            <div class="panel form-panel">
+                <div class="panel-header">
+                    <div class="panel-icon"><i class="fas fa-file-alt"></i></div>
+                    <h2>Quotation Details</h2>
+                </div>
+                <form id="quotationForm">
+                    <div class="form-section">
+                        <h3>Quotation Information</h3>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="quotationNumber"><i class="fas fa-hashtag"></i> Quotation Number</label>
-                                <input type="text" id="quotationNumber" value="QUOT-FM200-001" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="quotationDate"><i class="fas fa-calendar"></i> Quotation Date</label>
+                                <label for="quotationDate">Date of Issue</label>
                                 <input type="date" id="quotationDate" required>
                             </div>
                             <div class="form-group">
-                                <label for="validUntil"><i class="fas fa-clock"></i> Valid Until</label>
+                                <label for="validUntil">Valid Until</label>
                                 <input type="date" id="validUntil" required>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="form-section">
-                            <h3><i class="fas fa-user-tie"></i> Sender/Consultant Details</h3>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="senderName">Company Name</label>
-                                    <input type="text" id="senderName" placeholder="Your Company Name" value="Fire Safety Consultants Ltd." required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="senderContact">Contact Person</label>
-                                    <input type="text" id="senderContact" placeholder="Contact Person" value="John Smith" required>
-                                </div>
+                    <div class="form-section">
+                        <h3>Client Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="clientName">Client / Company Name</label>
+                                <input type="text" id="clientName" placeholder="TechCorp Solutions" required>
                             </div>
                             <div class="form-group">
-                                <label for="senderAddress">Company Address</label>
-                                <textarea id="senderAddress" rows="2" required>123 Safety Street, Fire Protection District, City, State 12345</textarea>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="senderEmail">Email Address</label>
-                                    <input type="email" id="senderEmail" value="sales@firesafetyconsultants.com" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="senderPhone">Phone Number</label>
-                                    <input type="tel" id="senderPhone" value="+1 (555) 123-4567" required>
-                                </div>
+                                <label for="clientContact">Contact Person</label>
+                                <input type="text" id="clientContact" placeholder="Mr. John Doe" required>
                             </div>
                         </div>
-
-                        <div class="form-section">
-                            <h3><i class="fas fa-building"></i> Receiver/Client Details</h3>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="clientName">Client Name</label>
-                                    <input type="text" id="clientName" placeholder="Client Company Name" value="ABC Data Center Inc." required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="clientContact">Contact Person</label>
-                                    <input type="text" id="clientContact" placeholder="Client Contact" value="Jane Doe" required>
-                                </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="clientEmail">Email</label>
+                                <input type="email" id="clientEmail" placeholder="john.doe@techcorp.com" required>
                             </div>
                             <div class="form-group">
-                                <label for="clientAddress">Client Address</label>
-                                <textarea id="clientAddress" rows="2" required>456 Tech Park Avenue, Data Center Zone, City, State 67890</textarea>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="clientEmail">Client Email</label>
-                                    <input type="email" id="clientEmail" value="jane.doe@abcdatacenter.com" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="clientPhone">Client Phone</label>
-                                    <input type="tel" id="clientPhone" value="+1 (555) 987-6543" required>
-                                </div>
+                                <label for="clientPhone">Phone</label>
+                                <input type="tel" id="clientPhone" placeholder="(555) 987-6543" required>
                             </div>
                         </div>
-
-                        <div class="form-section">
-                            <h3><i class="fas fa-project-diagram"></i> Project Details</h3>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="projectName">Project Name</label>
-                                    <input type="text" id="projectName" value="Data Center FM-200 Installation" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="projectLocation">Project Location</label>
-                                    <input type="text" id="projectLocation" value="Dubai, UAE" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="projectDescription">Project Description</label>
-                                <textarea id="projectDescription" rows="3" required>Supply, installation, testing, and commissioning of complete FM-200 Clean Agent Fire Suppression System for data center protection, compliant with NFPA 2001 standards.</textarea>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Payment & Terms</h3>
+                        <div class="form-row">
+                            <div class="form-group full-width">
+                                <label for="paymentTerms">Payment Terms (e.g., 30 days)</label>
+                                <input type="text" id="paymentTerms" value="Net 30 Days" required>
                             </div>
                         </div>
-                    </form>
+                        <div class="form-group full-width">
+                            <label for="scopeOfWork">Scope of Work Summary</label>
+                            <textarea id="scopeOfWork" rows="3" required>Design, Supply, Installation, and Commissioning of FM-200 Fire Suppression System as per NFPA 2001 standard.</textarea>
+                        </div>
+                    </div>
+
+                    <div class="action-section">
+                        <button type="button" id="previewQuotation" class="btn btn-info"><i class="fas fa-eye"></i> Preview Quotation</button>
+                        <button type="button" id="generatePDF" class="btn btn-primary"><i class="fas fa-file-pdf"></i> Export to PDF</button>
+                        <button type="button" id="exportQuotationCSV" class="btn btn-secondary"><i class="fas fa-file-csv"></i> Export to CSV</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="panel quotation-preview-panel" id="quotationContent">
+                <div class="panel-header">
+                    <div class="panel-icon"><i class="fas fa-handshake"></i></div>
+                    <h2>Quotation Preview (<span id="previewCurrency">USD</span>)</h2>
+                    <span id="quotationNumber" class="quote-number">Q-FM200-2024-001</span>
                 </div>
 
-                <!-- Calculation Summary -->
-                <div class="card summary-card">
-                    <div class="card-header">
-                        <h2><i class="fas fa-calculator"></i> Calculation Summary</h2>
-                        <span class="badge badge-info">From Session Data</span>
-                    </div>
-                    <div id="calculationSummary">
-                        <div class="summary-placeholder">
-                            <i class="fas fa-database"></i>
-                            <h3>No Calculation Data Found</h3>
-                            <p>Please perform a calculation first from the Calculator page to populate this section.</p>
-                            <a href="index.html" class="btn-primary">
-                                <i class="fas fa-calculator"></i> Go to Calculator
-                            </a>
-                        </div>
-                    </div>
+                <div class="sender-info">
+                    <strong>Quoting Company:</strong> <span id="senderCompanyName">Fire Safety Tools</span><br>
+                    <strong>Email:</strong> <span id="senderEmail">support@firesafetytools.com</span><br>
+                    <strong>Phone:</strong> <span id="senderPhone">(123) 456-7890</span><br>
                 </div>
 
-                <!-- BOQ Table -->
-                <div class="card boq-card">
-                    <div class="card-header">
-                        <h2><i class="fas fa-list-alt"></i> Bill of Quantities</h2>
-                        <div class="currency-selector">
-                            <label for="quoteCurrency">Currency:</label>
-                            <select id="quoteCurrency" class="currency-select">
-                                <option value="USD">USD</option>
-                                <option value="EUR">EUR</option>
-                                <option value="INR">INR</option>
-                                <option value="AED">AED</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="data-table" id="quoteTable">
-                            <thead>
-                                <tr>
-                                    <th>Item No.</th>
-                                    <th>Description</th>
-                                    <th>Quantity</th>
-                                    <th>Unit</th>
-                                    <th class="text-right">Unit Price</th>
-                                    <th class="text-right">Total Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody id="quoteTableBody">
-                                <tr>
-                                    <td colspan="6" class="text-center">
-                                        <div class="empty-state">
-                                            <i class="fas fa-table"></i>
-                                            <p>BOQ will be populated from calculation data</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot id="quoteTableFooter">
-                                <!-- Filled by JavaScript -->
-                            </tfoot>
-                        </table>
-                    </div>
+                <div class="client-info">
+                    <strong>TO:</strong> <span id="previewClientName">TechCorp Solutions</span><br>
+                    <strong>ATTN:</strong> <span id="previewClientContact">Mr. John Doe</span><br>
+                    <strong>Date:</strong> <span id="previewQuotationDate">2024-01-01</span><br>
+                    <strong>Valid Until:</strong> <span id="previewValidUntil">2024-02-01</span><br>
                 </div>
 
-                <!-- Terms & Conditions -->
-                <div class="card terms-card">
-                    <div class="card-header">
-                        <h2><i class="fas fa-file-signature"></i> Terms & Conditions</h2>
-                    </div>
-                    <div class="terms-content">
-                        <div class="form-group">
-                            <label for="paymentTerms">Payment Terms</label>
-                            <select id="paymentTerms" class="form-control">
-                                <option value="30">Net 30 Days</option>
-                                <option value="45">Net 45 Days</option>
-                                <option value="60">Net 60 Days</option>
-                                <option value="advance50">50% Advance, 50% on Completion</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="deliveryTime">Delivery & Installation Time</label>
-                            <input type="text" id="deliveryTime" value="6-8 weeks from order confirmation" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="warranty">Warranty Period</label>
-                            <input type="text" id="warranty" value="12 months from commissioning" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="specialTerms">Special Terms & Conditions</label>
-                            <textarea id="specialTerms" rows="4" class="form-control">1. All prices are in USD unless otherwise specified.
-2. Quotation valid for 30 days from date of issue.
-3. Prices exclude local taxes and duties.
-4. Installation requires site preparation by client.
-5. System commissioning includes basic operator training.
-6. OEM warranty applies to all equipment.</textarea>
-                        </div>
-                    </div>
-                </div>
+                <h3 class="quotation-section-title">Project Summary</h3>
+                <p id="previewScopeOfWork" class="scope-of-work">Scope of Work Summary will appear here.</p>
 
-                <!-- Action Buttons -->
-                <div class="action-section">
-                    <div class="action-buttons">
-                        <button id="previewQuotation" class="btn-secondary">
-                            <i class="fas fa-eye"></i> Preview Quotation
-                        </button>
-                        <button id="generatePDF" class="btn-primary btn-large">
-                            <i class="fas fa-file-pdf"></i> Generate PDF Quotation
-                        </button>
-                        <button id="generateExcel" class="btn-success btn-large">
-                            <i class="fas fa-file-excel"></i> Generate Excel/CSV
-                        </button>
-                    </div>
-                    <div class="action-notes">
-                        <p><i class="fas fa-info-circle"></i> PDF generation may take a few moments. Ensure all details are correct before generating.</p>
-                    </div>
+                <h3 class="quotation-section-title">Bill of Quantities (BOQ)</h3>
+                <table id="quoteBOQTable" class="data-table boq-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Description</th>
+                            <th>Qty</th>
+                            <th>Unit Price</th>
+                            <th>Total Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td colspan="5" class="empty-message">Click 'Preview Quotation' to populate data.</td></tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td colspan="4"><strong>SUBTOTAL</strong></td>
+                            <td id="quoteSubtotal">--</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td colspan="4"><strong>Installation & Engineering (Est.)</strong></td>
+                            <td id="quoteFactorCost">--</td>
+                        </tr>
+                        <tr class="grand-total-row">
+                            <td colspan="4"><strong>GRAND TOTAL ESTIMATE</strong></td>
+                            <td id="quoteGrandTotal">--</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <h3 class="quotation-section-title">Terms & Conditions</h3>
+                <ul class="terms-list">
+                    <li><i class="fas fa-check"></i> Quotation is based on the system requirements calculated for a room volume of <span id="finalRoomVolume">--</span> m³ and concentration of <span id="finalConcentration">--</span>%.</li>
+                    <li><i class="fas fa-check"></i> Payment terms are <span id="previewPaymentTerms">--</span>.</li>
+                    <li><i class="fas fa-check"></i> Prices are estimated in <span id="finalCurrency">--</span> and may be subject to final review upon site inspection.</li>
+                    <li><i class="fas fa-check"></i> Prices exclude all local taxes, duties, and government fees unless otherwise specified.</li>
+                    <li><i class="fas fa-check"></i> Validity of this quotation is 30 days from the date of issue.</li>
+                </ul>
+                
+                <div class="signature-line">
+                    Authorized Signature: _________________________
                 </div>
             </div>
+        </div>
+
+        <div class="disclaimer-section">
+            <i class="fas fa-info-circle"></i>
+            <span>This tool provides an estimated quotation. Always cross-verify pricing and design with certified vendors and the client's final requirements.</span>
         </div>
     </main>
 
     <footer class="main-footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <i class="fas fa-fire-extinguisher"></i>
-                        <h3>FM-200 Calculator</h3>
-                    </div>
-                    <p class="footer-tagline">Professional Fire Suppression Budgeting Tool</p>
-                    <p class="version">Version 3.0 • NFPA 2001 Compliant</p>
+            <div class="tool-links-section">
+                <div class="affiliate-area">
+                    <a href="https://amzn.to/4p8ceG6" target="_blank" rel="noopener noreferrer" class="affiliate-button amazon-button">
+                        <i class="fab fa-amazon"></i> Amazon Clearence Sale Upto 70% All Day
+                    </a>
+                    <a href="https://www.buymeacoffee.com/s.amjathkhan" target="_blank" rel="noopener noreferrer" class="affiliate-button coffee-button">
+                        <i class="fas fa-mug-hot"></i> Support the Developer (Buy Me a Coffee)
+                    </a>
                 </div>
-                
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html"><i class="fas fa-calculator"></i> Calculator</a></li>
-                        <li><a href="results.html"><i class="fas fa-chart-bar"></i> Results</a></li>
-                        <li><a href="quotation.html"><i class="fas fa-file-invoice-dollar"></i> Quotation</a></li>
+
+                <div class="explore-tools-area">
+                    <h3>Explore More Calculators & Tools</h3>
+                    <p>We highly recommend these expert resources for specialized safety and utility tools:</p>
+                    <ul class="other-tools-list">
+                        <li>
+                            <a href="https://www.firesafetytool.com" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-toolbox"></i> firesafetytool.com
+                            </a>
+                            <p class="tool-description">Your central hub for professional fire protection resources and calculators.</p>
+                        </li>
+                        <li>
+                            <a href="https://www.hsecalculator.com" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-shield-alt"></i> hsecalculator.com
+                            </a>
+                            <p class="tool-description">Comprehensive suite of tools for Health, Safety, and Environment (HSE) management and compliance.</p>
+                        </li>
+                        <li>
+                            <a href="https://www.webtoolsdaily.com" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-wrench"></i> webtoolsdaily.com
+                            </a>
+                            <p class="tool-description">A collection of simple, fast, and useful web-based utilities for daily tasks.</p>
+                        </li>
+                        <li>
+                            <a href="https://fire-extinguisher-audit-tool.vercel.app" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-clipboard-check"></i> Fire Extinguisher Audit Tool
+                            </a>
+                            <p class="tool-description">Streamline your fire extinguisher inspection and maintenance records.</p>
+                        </li>
+                        <li>
+                            <a href="https://firesafetyassessmenttool.vercel.app" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-tasks"></i> Fire Safety Assessment Tool
+                            </a>
+                            <p class="tool-description">A structured checklist and scoring system for site-specific fire risk evaluation.</p>
+                        </li>
+                        <li>
+                            <a href="https://ceiling-fire-extinguisher-cost-esti.vercel.app/" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-money-bill-wave"></i> Ceiling Fire Extinguisher Cost Estimator
+                            </a>
+                            <p class="tool-description">Calculate the cost for ceiling-mounted fire suppression solutions.</p>
+                        </li>
+                        <li>
+                            <a href="https://fire-extinguisher-calculator.vercel.app/" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-calculator"></i> Fire Extinguisher Calculator
+                            </a>
+                            <p class="tool-description">Determine the correct type and number of fire extinguishers for any area based on fire class.</p>
+                        </li>
                     </ul>
                 </div>
-                
-                <div class="footer-section">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="https://www.nfpa.org/2001" target="_blank" rel="noopener"><i class="fas fa-book"></i> NFPA 2001 Standard</a></li>
-                        <li><a href="#" id="oemGuide"><i class="fas fa-external-link-alt"></i> OEM Selection Guide</a></li>
-                        <li><a href="#" id="printGuide"><i class="fas fa-print"></i> Print Guide</a></li>
-                    </ul>
+            </div>
+
+            <div class="footer-details">
+                <div class="footer-links">
+                    <a href="#"><i class="fas fa-info-circle"></i> About</a>
+                    <a href="#"><i class="fas fa-user-shield"></i> Privacy Policy</a>
+                    <a href="#"><i class="fas fa-hands-helping"></i> Support</a>
                 </div>
-                
-                <div class="footer-section">
-                    <h4>Support This Project</h4>
-                    <div class="support-links">
-                        <a href="https://www.buymeacoffee.com/firesafety" target="_blank" rel="noopener" class="coffee-link">
-                            <i class="fas fa-coffee"></i> Buy Me a Coffee
-                        </a>
-                        <a href="#" class="affiliate-link" id="affiliateLink">
-                            <i class="fas fa-shopping-cart"></i> Recommended Suppliers
-                        </a>
-                        <div class="contact-info">
-                            <i class="fas fa-envelope"></i> support@firesafetytools.com
-                        </div>
-                    </div>
+                <div class="contact-info">
+                    <i class="fas fa-envelope"></i> support@firesafetytools.com
                 </div>
             </div>
             
@@ -321,14 +272,11 @@
         </div>
     </footer>
 
-    <!-- JavaScript Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     
-    <!-- Main Application Script -->
     <script src="script.js"></script>
     
-    <!-- Google Translate Initialization -->
     <script>
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
