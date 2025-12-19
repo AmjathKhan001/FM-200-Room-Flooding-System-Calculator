@@ -555,7 +555,7 @@
         }
     </style>
 
-    <!-- Results Page JavaScript -->
+     <!-- Results Page JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize feedback modal
@@ -585,110 +585,85 @@
                 if (feedbackForm) {
                     feedbackForm.addEventListener('submit', function(e) {
                         e.preventDefault();
-                        alert('Thank you for your feedback! We will get back to you soon.');
+                        alert('Thank you for your feedback!');
                         feedbackForm.reset();
                         feedbackModal.style.display = 'none';
                     });
                 }
             }
             
-            // Theme toggle functionality
-            const themeToggle = document.getElementById('themeToggle');
-            if (themeToggle) {
-                const currentTheme = localStorage.getItem('fm200-theme') || 'light';
-                if (currentTheme === 'dark') {
-                    document.body.classList.add('dark-mode');
-                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                }
-                
-                themeToggle.addEventListener('click', function() {
-                    if (document.body.classList.contains('dark-mode')) {
-                        document.body.classList.remove('dark-mode');
-                        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-                        localStorage.setItem('fm200-theme', 'light');
-                    } else {
-                        document.body.classList.add('dark-mode');
-                        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                        localStorage.setItem('fm200-theme', 'dark');
-                    }
-                });
-            }
+            // Load calculation data
+            loadCalculationData();
             
-            // Visitor counter
-            const visitorCountElement = document.getElementById('visitorCount');
-            if (visitorCountElement) {
-                try {
-                    let count = localStorage.getItem('fm200-visitor-count');
-                    if (!count) {
-                        count = Math.floor(Math.random() * 500) + 1500;
-                    } else {
-                        count = parseInt(count) + 1;
-                    }
-                    localStorage.setItem('fm200-visitor-count', count.toString());
-                    visitorCountElement.textContent = count.toLocaleString();
-                } catch (e) {
-                    visitorCountElement.textContent = '1,500+';
-                }
-            }
+            // Set up button event listeners
+            document.getElementById('printResults')?.addEventListener('click', function() {
+                window.print();
+            });
             
-            // Initialize results display
-            initializeResultsDisplay();
-            
-            // Event listeners for buttons
-            document.getElementById('printResults')?.addEventListener('click', printResults);
-            document.getElementById('exportCSV')?.addEventListener('click', exportCSV);
+            document.getElementById('exportCSV')?.addEventListener('click', exportToCSV);
             document.getElementById('copyBOQ')?.addEventListener('click', copyBOQ);
             document.getElementById('emailBOQ')?.addEventListener('click', emailBOQ);
         });
         
-        function initializeResultsDisplay() {
+        function loadCalculationData() {
             try {
-                const savedData = sessionStorage.getItem('fm200_calculation_data');
-                if (savedData) {
-                    const data = JSON.parse(savedData);
-                    displayResults(data);
-                    generateBOQ(data);
-                    generateCylinderVisual(data.calculationResults);
-                } else {
-                    // Show message if no data
-                    const boqBody = document.getElementById('boqTableBody');
-                    if (boqBody) {
-                        boqBody.innerHTML = `
-                            <tr>
-                                <td colspan="4" style="text-align: center; padding: 40px;">
-                                    <i class="fas fa-calculator fa-3x" style="color: var(--primary); margin-bottom: 20px;"></i>
-                                    <h4 style="color: var(--primary); margin-bottom: 10px;">No Calculation Data Found</h4>
-                                    <p style="color: var(--gray); margin-bottom: 20px;">Please use the calculator to generate results first.</p>
-                                    <a href="index.html" class="btn btn-primary" style="text-decoration: none;">
-                                        <i class="fas fa-calculator"></i> Go to Calculator
-                                    </a>
-                                </td>
-                            </tr>
-                        `;
-                    }
+                // Try to get data from sessionStorage first, then localStorage
+                let data = sessionStorage.getItem('fm200_calculation_data') || 
+                          localStorage.getItem('fm200_last_calculation');
+                
+                if (!data) {
+                    showNoDataMessage();
+                    return;
                 }
+                
+                const calculationData = JSON.parse(data);
+                displayResults(calculationData);
+                generateBOQ(calculationData);
+                generateCylinderVisual(calculationData.calculationResults);
+                
             } catch (error) {
-                console.error('Error loading results:', error);
+                console.error('Error loading calculation data:', error);
+                showNoDataMessage();
+            }
+        }
+        
+        function showNoDataMessage() {
+            const boqBody = document.getElementById('boqTableBody');
+            if (boqBody) {
+                boqBody.innerHTML = `
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 40px;">
+                            <i class="fas fa-calculator fa-3x" style="color: #ff4c4c; margin-bottom: 20px;"></i>
+                            <h4 style="color: #ff4c4c; margin-bottom: 10px;">No Calculation Data Found</h4>
+                            <p style="color: #666; margin-bottom: 20px;">Please use the calculator to generate results first.</p>
+                            <a href="index.html" class="btn btn-primary" style="text-decoration: none; display: inline-block;">
+                                <i class="fas fa-calculator"></i> Go to Calculator
+                            </a>
+                        </td>
+                    </tr>
+                `;
             }
         }
         
         function displayResults(data) {
+            const calc = data.calculationResults;
+            
             // Update summary information
             document.getElementById('displayProjectName').textContent = data.formData.projectName || 'Unnamed Project';
-            document.getElementById('agentMassResult').textContent = `${data.calculationResults.agentWeight} kg`;
-            document.getElementById('cylinderCountResult').textContent = `${data.calculationResults.cylinderCount} x ${data.calculationResults.cylinderSize} kg cylinders`;
-            document.getElementById('roomVolumeResult').textContent = `${data.calculationResults.netVolume} m³`;
-            document.getElementById('designTempResult').textContent = `${data.calculationResults.designTemperature} °C`;
-            document.getElementById('altitudeResult').textContent = `${data.calculationResults.altitude} m`;
-            document.getElementById('concentrationResult').textContent = `${data.calculationResults.concentration}%`;
-            document.getElementById('specificVolumeResult').textContent = `${data.calculationResults.specificVaporVolume} m³/kg`;
-            document.getElementById('nozzleCoverageResult').textContent = `${data.calculationResults.floorArea} m²`;
-            document.getElementById('nozzleCountResult').textContent = data.calculationResults.nozzleCount;
-            document.getElementById('pipingLengthResult').textContent = `${data.calculationResults.pipingLength} m`;
+            document.getElementById('agentMassResult').textContent = `${calc.agentWeight} kg`;
+            document.getElementById('cylinderCountResult').textContent = `${calc.cylinderCount} x ${calc.cylinderSize} kg cylinders`;
+            document.getElementById('roomVolumeResult').textContent = `${calc.netVolume} m³`;
+            document.getElementById('designTempResult').textContent = `${calc.designTemperature} °C`;
+            document.getElementById('altitudeResult').textContent = `${calc.altitude} m`;
+            document.getElementById('concentrationResult').textContent = `${calc.concentration}%`;
+            document.getElementById('specificVolumeResult').textContent = `${calc.specificVaporVolume} m³/kg`;
+            document.getElementById('nozzleCoverageResult').textContent = `${calc.floorArea} m²`;
+            document.getElementById('nozzleCountResult').textContent = calc.nozzleCount;
+            document.getElementById('pipingLengthResult').textContent = `${calc.pipingLength} m`;
         }
         
         function generateBOQ(data) {
-            const costData = calculateCosts(data.calculationResults);
+            const calc = data.calculationResults;
             const boqBody = document.getElementById('boqTableBody');
             
             if (!boqBody) return;
@@ -696,42 +671,45 @@
             // Clear existing content
             boqBody.innerHTML = '';
             
+            // Calculate costs
+            const costs = calculateCosts(calc);
+            
             // Add BOQ items
             const items = [
                 {
                     description: 'FM-200 Clean Agent',
-                    quantity: data.calculationResults.agentWeight,
+                    quantity: calc.agentWeight,
                     unit: 'kg',
                     unitPrice: 4000,
-                    total: data.calculationResults.agentWeight * 4000
+                    total: calc.agentWeight * 4000
                 },
                 {
                     description: 'Storage Cylinders (54.4 kg)',
-                    quantity: data.calculationResults.cylinderCount,
+                    quantity: calc.cylinderCount,
                     unit: 'nos',
                     unitPrice: 90000,
-                    total: data.calculationResults.cylinderCount * 90000
+                    total: calc.cylinderCount * 90000
                 },
                 {
-                    description: 'Cylinder Valve Assemblies',
-                    quantity: data.calculationResults.cylinderCount,
+                    description: 'Valve Assemblies',
+                    quantity: calc.cylinderCount,
                     unit: 'nos',
                     unitPrice: 25000,
-                    total: data.calculationResults.cylinderCount * 25000
+                    total: calc.cylinderCount * 25000
                 },
                 {
                     description: 'Nozzles (Standard Coverage)',
-                    quantity: data.calculationResults.nozzleCount,
+                    quantity: calc.nozzleCount,
                     unit: 'nos',
                     unitPrice: 8000,
-                    total: data.calculationResults.nozzleCount * 8000
+                    total: calc.nozzleCount * 8000
                 },
                 {
                     description: 'Piping System (Sch 40)',
-                    quantity: data.calculationResults.pipingLength,
+                    quantity: calc.pipingLength,
                     unit: 'm',
                     unitPrice: 1200,
-                    total: data.calculationResults.pipingLength * 1200
+                    total: calc.pipingLength * 1200
                 },
                 {
                     description: 'Fittings & Accessories',
@@ -746,27 +724,6 @@
                     unit: 'nos',
                     unitPrice: 120000,
                     total: 120000
-                },
-                {
-                    description: 'Smoke Detectors',
-                    quantity: Math.max(2, Math.ceil(data.calculationResults.floorArea / 100)),
-                    unit: 'nos',
-                    unitPrice: 4500,
-                    total: Math.max(2, Math.ceil(data.calculationResults.floorArea / 100)) * 4500
-                },
-                {
-                    description: 'Heat Detectors',
-                    quantity: 2,
-                    unit: 'nos',
-                    unitPrice: 3800,
-                    total: 7600
-                },
-                {
-                    description: 'Manual Call Points',
-                    quantity: 2,
-                    unit: 'nos',
-                    unitPrice: 2500,
-                    total: 5000
                 }
             ];
             
@@ -785,10 +742,24 @@
                 boqBody.appendChild(row);
             });
             
+            // Add smoke detectors
+            const smokeDetectors = Math.max(2, Math.ceil(calc.floorArea / 100));
+            const smokeDetectorCost = smokeDetectors * 4500;
+            subtotal += smokeDetectorCost;
+            
+            const smokeRow = document.createElement('tr');
+            smokeRow.innerHTML = `
+                <td>Smoke Detectors</td>
+                <td>${smokeDetectors} nos</td>
+                <td>₹ 4,500.00</td>
+                <td>₹ ${smokeDetectorCost.toLocaleString('en-IN')}</td>
+            `;
+            boqBody.appendChild(smokeRow);
+            
             // Calculate additional costs
-            const installationCost = subtotal * 0.28; // 28% installation
-            const engineeringCost = subtotal * 0.15; // 15% engineering
-            const taxContingency = subtotal * 0.18; // 18% tax & contingency
+            const installationCost = subtotal * 0.28; // 28%
+            const engineeringCost = subtotal * 0.15; // 15%
+            const taxContingency = subtotal * 0.18; // 18%
             const grandTotal = subtotal + installationCost + engineeringCost + taxContingency;
             
             // Update cost display
@@ -799,15 +770,14 @@
             document.getElementById('grandTotalCost').textContent = `₹ ${grandTotal.toLocaleString('en-IN')}`;
             
             // Update cost breakdown
-            document.getElementById('agentCostBreakdown').textContent = `₹ ${(data.calculationResults.agentWeight * 4000).toLocaleString('en-IN')}`;
-            document.getElementById('cylinderCostBreakdown').textContent = `₹ ${(data.calculationResults.cylinderCount * 115000).toLocaleString('en-IN')}`;
-            document.getElementById('detectionCostBreakdown').textContent = `₹ ${(120000 + (Math.max(2, Math.ceil(data.calculationResults.floorArea / 100)) * 4500) + 7600 + 5000).toLocaleString('en-IN')}`;
-            document.getElementById('pipingCostBreakdown').textContent = `₹ ${((data.calculationResults.nozzleCount * 8000) + (data.calculationResults.pipingLength * 1200) + 15000).toLocaleString('en-IN')}`;
+            document.getElementById('agentCostBreakdown').textContent = `₹ ${(calc.agentWeight * 4000).toLocaleString('en-IN')}`;
+            document.getElementById('cylinderCostBreakdown').textContent = `₹ ${(calc.cylinderCount * 115000).toLocaleString('en-IN')}`;
+            document.getElementById('detectionCostBreakdown').textContent = `₹ ${(120000 + smokeDetectorCost + 7600 + 5000).toLocaleString('en-IN')}`;
+            document.getElementById('pipingCostBreakdown').textContent = `₹ ${((calc.nozzleCount * 8000) + (calc.pipingLength * 1200) + 15000).toLocaleString('en-IN')}`;
         }
         
         function calculateCosts(calcData) {
-            // This is a simplified cost calculation
-            // In a real application, this would be more detailed
+            // Simplified cost calculation
             const baseCosts = {
                 agentPerKg: 4000,
                 cylinder: 90000,
@@ -851,25 +821,25 @@
                     label: 'Total Cylinders',
                     value: calcData.cylinderCount,
                     subtitle: '54.4 kg cylinders',
-                    color: 'var(--primary)'
+                    color: '#ff4c4c'
                 },
                 {
                     label: 'Agent Weight',
                     value: `${calcData.agentWeight.toFixed(0)} kg`,
                     subtitle: 'FM-200 Clean Agent',
-                    color: 'var(--secondary)'
+                    color: '#0099e5'
                 },
                 {
                     label: 'System Coverage',
                     value: `${calcData.netVolume.toFixed(0)} m³`,
                     subtitle: 'Protected Volume',
-                    color: 'var(--tertiary)'
+                    color: '#34bf49'
                 },
                 {
                     label: 'Nozzles Required',
                     value: calcData.nozzleCount,
                     subtitle: 'For uniform distribution',
-                    color: 'var(--warning)'
+                    color: '#ff9800'
                 }
             ];
             
@@ -890,19 +860,16 @@
             });
         }
         
-        function printResults() {
-            window.print();
-        }
-        
-        function exportCSV() {
+        function exportToCSV() {
             try {
-                const savedData = sessionStorage.getItem('fm200_calculation_data');
-                if (!savedData) {
+                const data = JSON.parse(sessionStorage.getItem('fm200_calculation_data') || 
+                                       localStorage.getItem('fm200_last_calculation'));
+                
+                if (!data) {
                     alert('No data to export. Please generate calculations first.');
                     return;
                 }
                 
-                const data = JSON.parse(savedData);
                 const calc = data.calculationResults;
                 const costs = calculateCosts(calc);
                 
@@ -947,13 +914,14 @@
         
         function copyBOQ() {
             try {
-                const savedData = sessionStorage.getItem('fm200_calculation_data');
-                if (!savedData) {
+                const data = JSON.parse(sessionStorage.getItem('fm200_calculation_data') || 
+                                       localStorage.getItem('fm200_last_calculation'));
+                
+                if (!data) {
                     alert('No data to copy. Please generate calculations first.');
                     return;
                 }
                 
-                const data = JSON.parse(savedData);
                 const calc = data.calculationResults;
                 const costs = calculateCosts(calc);
                 
@@ -997,13 +965,14 @@ https://fm-200-room-flooding-system-calcula.vercel.app/
         
         function emailBOQ() {
             try {
-                const savedData = sessionStorage.getItem('fm200_calculation_data');
-                if (!savedData) {
+                const data = JSON.parse(sessionStorage.getItem('fm200_calculation_data') || 
+                                       localStorage.getItem('fm200_last_calculation'));
+                
+                if (!data) {
                     alert('No data to email. Please generate calculations first.');
                     return;
                 }
                 
-                const data = JSON.parse(savedData);
                 const calc = data.calculationResults;
                 const costs = calculateCosts(calc);
                 
@@ -1036,7 +1005,7 @@ COST ESTIMATE (INR):
 This is a preliminary estimate generated by FM-200 Calculator.
 Please consult with certified fire protection engineers for final design.
 
-Generated by: https://safetyguide360-room-flooding-system.vercel.app/
+Generated by: https://fm-200-room-flooding-system-calcula.vercel.app/
                 `.trim());
                 
                 const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
