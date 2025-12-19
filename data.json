@@ -3,10 +3,7 @@
     "USD": 1.00,
     "EUR": 0.92,
     "INR": 83.50,
-    "AED": 3.67,
-    "GBP": 0.79,
-    "CAD": 1.36,
-    "AUD": 1.52
+    "AED": 3.67
   },
   "costMultipliers": {
     "agentCostPerKg": 48.50,
@@ -29,21 +26,5 @@
     "installationFactor": 1.28,
     "engineeringFactor": 1.15,
     "contingencyFactor": 1.10
-  },
-  "technicalSpecs": {
-    "cylinderSizes": [
-      { "weight": 54.4, "name": "120lb Standard" },
-      { "weight": 27.2, "name": "60lb Compact" },
-      { "weight": 108.8, "name": "240lb Large" }
-    ],
-    "nozzleTypes": [
-      { "type": "Standard", "coverage": 50 },
-      { "type": "High-Flow", "coverage": 75 },
-      { "type": "Low-Pressure", "coverage": 35 }
-    ],
-    "safetyFactors": {
-      "altitude": 1.1,
-      "highTemp": 1.05
-    }
   }
 }
