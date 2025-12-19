@@ -1,0 +1,30 @@
+{
+  "exchangeRates": {
+    "USD": 1.00,
+    "EUR": 0.92,
+    "INR": 83.50,
+    "AED": 3.67
+  },
+  "costMultipliers": {
+    "agentCostPerKg": 48.50,
+    "cylinderCost": 1250.00,
+    "nozzleCost": 175.00,
+    "pipingCostPerMeter": 45.00,
+    "fittingsCost": 320.00,
+    "valveAssembly": 450.00,
+    "mountingHardware": 85.00,
+    "detectionPanel": 2200.00,
+    "smokeDetector": 95.00,
+    "heatDetector": 85.00,
+    "manualCallPoint": 65.00,
+    "hooterStrobe": 75.00,
+    "warningSigns": 45.00,
+    "installationLaborPerHour": 85.00,
+    "engineeringDesign": 2500.00,
+    "commissioningTesting": 1800.00,
+    "documentation": 450.00,
+    "installationFactor": 1.28,
+    "engineeringFactor": 1.15,
+    "contingencyFactor": 1.10
+  }
+}
