@@ -2,12 +2,15 @@
 
 A professional web application for calculating FM-200 clean agent fire suppression system requirements, generating bill of quantities, and creating quotations.
 
-## Version 4.0 Updates (Traffic & Design Enhancement)
-- **Design Refinement**: Comprehensive updates to `style.css` to fix layout issues and ensure a clean, professional, and fully responsive design across all devices.
-- **Affiliate & Traffic Integration**: Added new footer sections for affiliate links (Amazon, Buy Me a Coffee) and a dedicated 'Explore More Tools' section.
-- **Analytics & Advertising**: Integrated Google AdSense (Auto-ads) and Google Analytics scripts for monetization and traffic analysis.
-- **Enhanced Tool Links**: Added and described links to other specialized safety and utility calculators to drive user traffic.
-- **Code Maintenance**: Updated version number and internal developer comments.
+## Version 5.0 Updates (Complete Overhaul)
+- **New Color Scheme**: Updated to #ff4c4c (Red) / #0099e5 (Blue) / #34bf49 (Green) / #000000 (Black)
+- **Enhanced Tools Section**: Added categorized tools links (HSE Tools, Fire Safety Tools, Utility Tools)
+- **Print/PDF Functionality**: Added "Print/Save as PDF" button on results page
+- **Visitor Counter**: Real-time visitor count with localStorage persistence
+- **SEO Optimization**: Added meta tags, structured data, and improved mobile responsiveness
+- **Contact Information**: Updated with all social media links and contact details
+- **Feedback System**: Integrated feedback modal for user suggestions
+- **Mobile-Friendly**: Complete responsive design overhaul
 
 ## Features
 
@@ -16,10 +19,13 @@ A professional web application for calculating FM-200 clean agent fire suppressi
 - **Multi-Currency Support**: USD, EUR, INR, AED with real-time conversion
 - **Enhanced Bill of Quantities**: Detailed equipment list with comprehensive pricing
 - **PDF/Excel Generation**: Export quotations and BOQs
-- **Responsive Design**: Optimized for all devices
+- **Print Functionality**: Save results as PDF for professional reports
+- **Responsive Design**: Optimized for all devices (mobile, tablet, desktop)
 - **Dark/Light Mode**: User preference support
 - **Data Persistence**: Save calculations and templates
-- **OEM Integration**: Links to major suppliers
+- **Visitor Tracking**: Real-time visitor counter
+- **Feedback System**: User feedback collection
+- **SEO Optimized**: Meta tags and structured data for better search visibility
 
 ## Pages
 
@@ -27,17 +33,20 @@ A professional web application for calculating FM-200 clean agent fire suppressi
    - Input room dimensions and project details
    - Expert mode for advanced parameters
    - Real-time volume preview
+   - Save calculations locally
 
 2. **Results Page** (`results.html`)
    - Detailed calculation results
-   - Interactive cost breakdown chart
+   - Interactive cost breakdown
    - Enhanced Bill of quantities table
-   - Export options
+   - Print/Save as PDF functionality
+   - Export options (CSV)
 
 3. **Quotation Page** (`quotation.html`)
    - Professional quotation form
-   - PDF and Excel export with enhanced BOQ
+   - PDF export with enhanced BOQ
    - Client/sender details
+   - Auto-fill from calculations
 
 ## Deployment to Vercel
 
@@ -45,33 +54,74 @@ A professional web application for calculating FM-200 clean agent fire suppressi
 - GitHub account
 - Vercel account (free tier available)
 
-### Steps (Updated for V4.0)
+### Steps
 
-1. **Create GitHub Repository**
-   - Create a new, empty repository on GitHub (e.g., `fm200-calculator-v4`).
-   - Upload all 8 files (`index.html`, `results.html`, `quotation.html`, `script.js`, `style.css`, `data.json`, `vercel.json`, `README.md`) to the `main` branch of this repository.
+1. **Update GitHub Repository**
+   - Go to your GitHub repository: https://github.com/AmjathKhan001/Safetyguide360-Room-Flooding-System-Estimationtool
+   - Replace all files with the updated versions
+   - Commit changes to main branch
 
-2. **Import to Vercel**
-   - Log in to your Vercel dashboard.
-   - Click **"Add New..."** > **"Project"**.
-   - Select your newly created GitHub repository (`fm200-calculator-v4`).
-   - Vercel will auto-detect a static site project.
-   - Click **"Deploy"**.
+2. **Automatic Vercel Deployment**
+   - Vercel automatically deploys when you push changes to GitHub
+   - Go to https://vercel.com/dashboard
+   - Select your FM-200 project
+   - The deployment will automatically start
+   - Wait 1-2 minutes for completion
 
-3. **Go Live**
-   - Vercel will build and deploy the application. The Vercel URL is now your live estimation tool with enhanced features and design.
+3. **Verify Deployment**
+   - Visit your live site: https://fm-200-room-flooding-system-calcula.vercel.app/
+   - Test all new features
+   - Check mobile responsiveness
 
----
+## Contact & Support
+
+**Developer**: Amjath Khan  
+**Email**: contact@amjathkhan.com  
+**Phone**: +91-9750816163  
+**Website**: https://www.amjathkhan.com/
+
+**Social Media**:
+- Facebook: https://www.facebook.com/Amjathkhan.s
+- Instagram: https://www.instagram.com/amjathkhan_official/#
+- Twitter/X: https://x.com/amjikhan
+- LinkedIn: https://www.linkedin.com/in/amjathkhan-shiekusman/
+- Bluesky: https://bsky.app/profile/amjathkhan.bsky.social
+
 ## Explore More Calculators & Tools
 
-We highly recommend these expert resources for specialized safety and utility tools:
+### HSE Tools
+- **HSE Calculators**: https://www.hsecalculator.com/
+- **HSE Tools Toolkit**: https://hse-toolkit.vercel.app/
 
-| Tool Name | Description | Link |
-| :--- | :--- | :--- |
-| **Fire Safety Tool** | Your central hub for professional fire protection resources and calculators. | [firesafetytool.com](https://www.firesafetytool.com) |
-| **HSE Calculator** | Comprehensive suite of tools for Health, Safety, and Environment (HSE) management and compliance. | [hsecalculator.com](https://www.hsecalculator.com) |
-| **Web Tools Daily** | A collection of simple, fast, and useful web-based utilities for daily tasks. | [webtoolsdaily.com](https://www.webtoolsdaily.com) |
-| **Fire Extinguisher Audit Tool** | Streamline your fire extinguisher inspection and maintenance records. | [fire-extinguisher-audit-tool.vercel.app](https://fire-extinguisher-audit-tool.vercel.app) |
-| **Fire Safety Assessment Tool** | A structured checklist and scoring system for site-specific fire risk evaluation. | [firesafetyassessmenttool.vercel.app](https://firesafetyassessmenttool.vercel.app) |
-| **Ceiling Extinguisher Cost Estimator** | Calculate the cost for ceiling-mounted fire suppression solutions. | [ceiling-fire-extinguisher-cost-esti.vercel.app](https://ceiling-fire-extinguisher-cost-esti.vercel.app/) |
-| **Fire Extinguisher Calculator** | Determine the correct type and number of fire extinguishers for any area based on fire class. | [fire-extinguisher-calculator.vercel.app](https://fire-extinguisher-calculator.vercel.app/) |
+### Fire Safety Tools
+- **Ceiling Mounted Fire Extinguisher Estimation Tool**: https://safetyguide360-ceilingmounted-firee.vercel.app/
+- **Fire Safety Calculators**: https://www.firesafetytool.com/
+- **Fire Extinguisher Health Checkup Audit Tool**: https://fire-extinguisher-audit-tool.vercel.app/
+- **Fire Safety Assessment Tool**: https://safetyguide360-firesafety-assessmen.vercel.app/
+- **Fire Extinguisher Estimation Tool**: https://fire-extinguisher-calculator.vercel.app/
+- **Kitchen Suppression System Estimation Tool**: https://kitchen-fire-suppression-calculator.vercel.app/
+- **Room Flooding System Estimation Tool** (Current Tool): https://fm-200-room-flooding-system-calcula.vercel.app/
+- **Panel Fire Suppression Calculator**: https://safetyguide360-panel-fire-suppressi.vercel.app/
+
+### Utility Tools
+- **Daily Smart Tool**: https://www.dailysmarttool.com/
+- **Web Tools Daily**: https://www.webtoolsdaily.com/
+
+## Technical Specifications
+
+- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
+- **Styling**: Custom CSS with CSS Grid and Flexbox
+- **Icons**: Font Awesome 6.4.0
+- **Fonts**: Google Fonts (Inter, Roboto)
+- **Charts**: Chart.js integration
+- **PDF Generation**: jsPDF with html2canvas
+- **Local Storage**: Browser localStorage for data persistence
+- **SEO**: Structured data (Schema.org), Open Graph meta tags
+- **Analytics**: Google Analytics (G-376208036)
+- **Ads**: Google AdSense integration
+
+## License
+
+This tool is provided for educational and professional estimation purposes. All calculations should be verified by certified fire protection engineers.
+
+FM-200® is a registered trademark of Chemours Company.
