@@ -353,7 +353,7 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2024 Fire Safety Tools. This tool provides budgetary estimates only. Final design must be performed by qualified fire protection engineers.</p>
+                <p>&copy; 2025 SafetyGuide360. All rights reserved. | Professional Fire Safety Tools. Final design must be performed by qualified fire protection engineers.</p>
                 <div class="footer-disclaimer">
                     <i class="fas fa-exclamation-triangle"></i>
                     <span>Disclaimer: This calculator is for preliminary estimation only. All calculations should be verified by certified professionals.</span>
@@ -369,82 +369,69 @@
     <script src="script.js"></script>
     
     <script>
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'en,es,fr,de,ar,hi,zh-CN',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                autoDisplay: false
-            }, 'google_translate_element');
-        }
+    // Global functions defined in script.js
+    // Only keep minimal page-specific initialization
+    document.addEventListener('DOMContentLoaded', function() {
+        updateVisitorCounter();
+        
+        // Set default dates
+        const today = new Date().toISOString().split('T')[0];
+        const nextMonth = new Date();
+        nextMonth.setMonth(nextMonth.getMonth() + 1);
+        const validUntil = nextMonth.toISOString().split('T')[0];
+        
+        const dateField = document.getElementById('quotationDate');
+        const validField = document.getElementById('validUntil');
+        
+        if (dateField) dateField.value = today;
+        if (validField) validField.value = validUntil;
 
-        // Visitor counter
-        function updateVisitorCounter() {
-            const counterElement = document.getElementById('visitorCount');
-            if (!counterElement) return;
+        // Feedback modal functionality (same as other pages)
+        const feedbackBtn = document.getElementById('feedbackBtn');
+        const feedbackModal = document.getElementById('feedbackModal');
+        const closeModal = feedbackModal?.querySelector('.close-modal');
+        
+        if (feedbackBtn && feedbackModal) {
+            feedbackBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                feedbackModal.style.display = 'flex';
+            });
             
-            let visitorCount = localStorage.getItem('fm200VisitorCount');
+            closeModal.addEventListener('click', function() {
+                feedbackModal.style.display = 'none';
+            });
             
-            if (!visitorCount) {
-                visitorCount = Math.floor(Math.random() * 500) + 1500;
-            } else {
-                visitorCount = parseInt(visitorCount);
-            }
+            window.addEventListener('click', function(e) {
+                if (e.target === feedbackModal) {
+                    feedbackModal.style.display = 'none';
+                }
+            });
             
-            visitorCount += 1;
-            localStorage.setItem('fm200VisitorCount', visitorCount);
-            counterElement.textContent = visitorCount.toLocaleString();
-        }
-
-        // Feedback modal functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            updateVisitorCounter();
-            
-            const feedbackBtn = document.getElementById('feedbackBtn');
-            const feedbackModal = document.getElementById('feedbackModal');
-            const closeModal = feedbackModal?.querySelector('.close-modal');
-            
-            if (feedbackBtn && feedbackModal) {
-                feedbackBtn.addEventListener('click', function(e) {
+            const feedbackForm = document.getElementById('feedbackForm');
+            if (feedbackForm) {
+                feedbackForm.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    feedbackModal.style.display = 'flex';
-                });
-                
-                closeModal.addEventListener('click', function() {
+                    
+                    const formData = {
+                        name: document.getElementById('feedbackName').value,
+                        email: document.getElementById('feedbackEmail').value,
+                        message: document.getElementById('feedbackMessage').value,
+                        type: document.getElementById('feedbackType').value,
+                        timestamp: new Date().toISOString(),
+                        page: window.location.href
+                    };
+                    
+                    const feedbacks = JSON.parse(localStorage.getItem('fm200Feedbacks') || '[]');
+                    feedbacks.push(formData);
+                    localStorage.setItem('fm200Feedbacks', JSON.stringify(feedbacks));
+                    
+                    alert('Thank you for your feedback! We will review it soon.');
+                    feedbackForm.reset();
                     feedbackModal.style.display = 'none';
                 });
-                
-                window.addEventListener('click', function(e) {
-                    if (e.target === feedbackModal) {
-                        feedbackModal.style.display = 'none';
-                    }
-                });
-                
-                const feedbackForm = document.getElementById('feedbackForm');
-                if (feedbackForm) {
-                    feedbackForm.addEventListener('submit', function(e) {
-                        e.preventDefault();
-                        
-                        const formData = {
-                            name: document.getElementById('feedbackName').value,
-                            email: document.getElementById('feedbackEmail').value,
-                            message: document.getElementById('feedbackMessage').value,
-                            type: document.getElementById('feedbackType').value,
-                            timestamp: new Date().toISOString(),
-                            page: window.location.href
-                        };
-                        
-                        const feedbacks = JSON.parse(localStorage.getItem('fm200Feedbacks') || '[]');
-                        feedbacks.push(formData);
-                        localStorage.setItem('fm200Feedbacks', JSON.stringify(feedbacks));
-                        
-                        alert('Thank you for your feedback! We will review it soon.');
-                        feedbackForm.reset();
-                        feedbackModal.style.display = 'none';
-                    });
-                }
             }
-        });
-    </script>
+        }
+    });
+</script>
 </body>
 </html>
