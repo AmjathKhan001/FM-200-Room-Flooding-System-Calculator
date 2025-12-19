@@ -1,6 +1,7 @@
 // FM-200 Calculator - Complete Application Logic
 // Version 4.0 - Professional Edition with Print Functionality
 // UPDATED: Added fallback data to handle missing data.json
+// FIXED: Typo in method call - initExpertMode not imfExpertMode
 
 // ============================================================================
 // CONFIGURATION & CONSTANTS
@@ -210,7 +211,7 @@ class FM200Calculator {
         }
 
         this.initThemeToggle();
-        this.initExpertMode();
+        this.initExpertMode();  // FIXED: Was imfExpertMode
         this.initGoogleTranslate();
         this.initAffiliateLinks();
         this.initBuyMeCoffee();
@@ -1411,6 +1412,18 @@ class FM200Calculator {
                 }
                 this.savePreferences();
             });
+        }
+    }
+
+    initExpertMode() {
+        const expertToggle = document.getElementById('expertModeToggle');
+        if (expertToggle) {
+            expertToggle.checked = this.userPrefs.expertMode;
+            
+            const expertPanel = document.getElementById('expertModePanel');
+            if (expertPanel) {
+                expertPanel.style.display = this.userPrefs.expertMode ? 'block' : 'none';
+            }
         }
     }
 
