@@ -496,5 +496,90 @@
     
     <!-- MAIN APPLICATION SCRIPT -->
     <script src="script.js"></script>
+    
+    <!-- Fix for form submission -->
+    <script>
+        // Additional fix for form submission
+        document.getElementById('fm200Form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Collect form data
+            const formData = {
+                projectName: document.getElementById('project-name')?.value || 'FM-200 Project',
+                clientLocation: document.getElementById('location')?.value || 'Not Specified',
+                roomLength: parseFloat(document.getElementById('room-length')?.value) || 10,
+                roomWidth: parseFloat(document.getElementById('room-width')?.value) || 8,
+                roomHeight: parseFloat(document.getElementById('room-height')?.value) || 3,
+                designTemperature: parseFloat(document.getElementById('room-temperature')?.value) || 20,
+                altitude: parseFloat(document.getElementById('altitude')?.value) || 0,
+                concentration: parseFloat(document.getElementById('hazard-class')?.value) || 7.5
+            };
+            
+            // Validate
+            if (formData.roomLength <= 0 || formData.roomWidth <= 0 || formData.roomHeight <= 0) {
+                alert('Room dimensions must be greater than zero');
+                return;
+            }
+            
+            if (formData.concentration < 7.0 || formData.concentration > 10.5) {
+                alert('Concentration must be between 7.0% and 10.5%');
+                return;
+            }
+            
+            // Simple calculation (NFPA 2001 formula)
+            const volume = formData.roomLength * formData.roomWidth * formData.roomHeight;
+            const specificVolume = 0.1269 + (0.0005 * formData.designTemperature);
+            const agentWeight = (volume / specificVolume) * (formData.concentration / (100 - formData.concentration));
+            
+            // Apply altitude correction
+            let finalAgentWeight = agentWeight;
+            if (formData.altitude > 500) {
+                const altitudeFactor = 1 + ((formData.altitude - 500) / 300) * 0.01;
+                finalAgentWeight *= altitudeFactor;
+            }
+            
+            // Calculate cylinders
+            const cylinderSize = 54.4;
+            const cylinderCount = Math.ceil(finalAgentWeight / cylinderSize);
+            
+            // Calculate nozzles
+            const floorArea = formData.roomLength * formData.roomWidth;
+            const nozzleCount = Math.max(2, Math.ceil(floorArea / 50));
+            
+            // Piping length estimate
+            const pipingLength = (formData.roomLength + formData.roomWidth) * 2 + (formData.roomHeight * 2);
+            
+            // Create results object
+            const calculationResults = {
+                agentWeight: Math.round(finalAgentWeight * 100) / 100,
+                cylinderCount: cylinderCount,
+                nozzleCount: nozzleCount,
+                cylinderSize: cylinderSize,
+                netVolume: Math.round(volume * 100) / 100,
+                floorArea: Math.round(floorArea * 100) / 100,
+                pipingLength: Math.round(pipingLength * 100) / 100,
+                specificVaporVolume: Math.round(specificVolume * 10000) / 10000,
+                concentration: formData.concentration,
+                designTemperature: formData.designTemperature,
+                altitude: formData.altitude
+            };
+            
+            // Save to sessionStorage
+            const completeData = {
+                formData: formData,
+                calculationResults: calculationResults,
+                timestamp: new Date().toISOString()
+            };
+            
+            sessionStorage.setItem('fm200_calculation_data', JSON.stringify(completeData));
+            localStorage.setItem('fm200_last_calculation', JSON.stringify(completeData));
+            
+            // Show success message and redirect
+            alert('Calculation successful! Redirecting to results...');
+            window.location.href = 'results.html';
+        });
+    </script>
+</body>
+</html>
 </body>
 </html>
