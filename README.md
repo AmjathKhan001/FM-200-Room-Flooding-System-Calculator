@@ -2,7 +2,7 @@
 
 A professional web application for calculating FM-200 clean agent fire suppression system requirements, generating bill of quantities, and creating quotations.
 
-## 🌟 Version 6.0 - Complete Overhaul (January 2024)
+## 🌟 Version 6.0 - Complete Overhaul (December 2025)
 
 ### **Major Updates:**
 - 🎨 **New Color Scheme**: Updated to professional colors: `#ff4c4c` (Red) / `#0099e5` (Blue) / `#34bf49` (Green) / `#000000` (Black)
@@ -17,7 +17,7 @@ A professional web application for calculating FM-200 clean agent fire suppressi
 
 ## 🚀 Live Deployment
 
-**Live URL:** https://fm-200-room-flooding-system-calcula.vercel.app/
+**Live URL:** https://safetyguide360-room-flooding-system.vercel.app/
 
 ## ✨ Features
 
